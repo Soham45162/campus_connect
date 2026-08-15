@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | CampusConnect</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .profile-edit-form {
+            display: none;
+        }
+        .profile-edit-form.show {
+            display: block;
+        }
+        .profile-view-details {
+            display: block;
+        }
+        .profile-view-details.hidden {
+            display: none;
+        }
+        .info-label {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 12px;
+            margin-bottom: 2px;
+        }
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--purple-900);
+            margin-bottom: 12px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+
+    <!-- NAVBAR -->
+    <nav class="dashboard-nav">
+        <div class="dashboard-logo" onclick="window.location.href='/dashboard.html'" style="cursor: pointer;">
+            <div class="logo-icon">CC</div>
+            <span>
+                Campus<span>Connect</span>
+            </span>
+        </div>
+
+        <div class="nav-right">
+            <div class="user-mini" style="cursor: default;">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div>
+                    <strong id="navUserName">Student</strong>
+                    <small id="navStudentId">Student</small>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="dashboard-main">
+
+        <!-- PROFILE COVER -->
+        <section class="profile-cover">
+            <div class="profile-large-avatar" id="profileLargeAvatar">S</div>
+            <div>
+                <span class="verified-badge">CAMPUS VERIFIED</span>
+                <h2 id="profileName">Loading Student...</h2>
+                <p id="profileEmail">loading.email@college.edu</p>
+            </div>
+            <button class="button button-dark" id="toggleEditBtn" onclick="toggleEditMode()">Edit Profile</button>
+        </section>
+
+        <!-- PROFILE CONTENT GRID -->
+        <section class="profile-grid">
+
+            <!-- LEFT COLUMN: VIEW DETAILS -->
+            <div class="profile-info-card profile-view-details" id="profileViewDetails">
+                <h3>About Me</h3>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+                
+                <div class="info-label">Bio / Description</div>
+                <p id="profileBio" style="margin-bottom: 15px; font-style: italic;">No bio added yet. Tell people about yourself!</p>
+
+                <div class="info-label">Branch & Year</div>
+                <div class="info-value" id="profileBranchYear">CSE • 3rd Year</div>
+
+                <div class="info-label">Student ID</div>
+                <div class="info-value" id="profileIdNumber">123456</div>
+
+                <div class="info-label">Skills & Interests</div>
+                <div class="skills" id="profileSkills">
+                    <span>No skills added yet</span>
+                </div>
+            </div>
+
+            <!-- LEFT COLUMN: EDIT FORM -->
+            <div class="profile-info-card profile-edit-form" id="profileEditForm">
+                <h3>Update Profile</h3>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+                
+                <form id="editProfileForm" onsubmit="saveProfile(event)">
+                    <div class="form-group">
+                        <label for="editFullName">Full Name</label>
+                        <input type="text" id="editFullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editStudentId">Student ID</label>
+                        <input type="text" id="editStudentId">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="editBranch">Branch</label>
+                            <select id="editBranch">
+                                <option value="CSE">CSE</option>
+                                <option value="IT">IT</option>
+                                <option value="ECE">ECE</option>
+                                <option value="Mechanical">Mechanical</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editYear">Year</label>
+                            <select id="editYear">
+                                <option value="1">First Year</option>
+                                <option value="2">Second Year</option>
+                                <option value="3">Third Year</option>
+                                <option value="4">Final Year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editBio">Bio</label>
+                        <textarea id="editBio" rows="3" placeholder="Tell other students about yourself..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editSkills">Skills (comma-separated)</label>
+                        <input type="text" id="editSkills" placeholder="e.g. Java, Python, Web Dev, UI Design">
+                    </div>
+
+                    <div class="form-row" style="margin-top: 15px;">
+                        <button type="button" class="button" onclick="toggleEditMode()" style="background: #eee6f3; color: var(--purple-800); width: 100%;">Cancel</button>
+                        <button type="submit" class="button button-dark" style="width: 100%;">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: STATS -->
+            <div class="profile-info-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h3>Campus Activities</h3>
+                    <p style="margin-top: 5px;">Your contributions to the CampusConnect community.</p>
+                    
+                    <div class="profile-stat-row">
+                        <div>
+                            <strong id="statDoubts">0</strong>
+                            <small>Doubts Asked</small>
+                        </div>
+                        <div>
+                            <strong id="statProducts">0</strong>
+                            <small>Items Listed</small>
+                        </div>
+                        <div>
+                            <strong id="statResources">0</strong>
+                            <small>Resources Shared</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: var(--purple-100); border-radius: 12px; padding: 15px; margin-top: 20px; display: flex; align-items: center; gap: 12px;">
+                    <div style="font-size: 24px;">💡</div>
+                    <div style="font-size: 10px; line-height: 1.5; color: var(--purple-900);">
+                        <strong>Did you know?</strong><br>
+                        Listing study materials and helping peers with doubts builds your academic reputation on campus!
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        const token = localStorage.getItem("campusconnect_token");
+        const savedUser = localStorage.getItem("campusconnect_user");
+
+        // Protect page
+        if (!token || !savedUser) {
+            window.location.replace("/");
+        }
+
+        let currentUser = JSON.parse(savedUser);
+        let isEditing = false;
+
+        // Initialize display
+        updateDisplay(currentUser);
+        fetchLatestProfile();
+        fetchCampusStats();
+
+        function updateDisplay(user) {
+            const firstName = user.fullName ? user.fullName.split(" ")[0] : "Student";
+            
+            // Navbar
+            document.getElementById("navUserName").textContent = user.fullName || "Student";
+            document.getElementById("navStudentId").textContent = user.studentId || "";
+            document.getElementById("userAvatar").textContent = firstName.charAt(0).toUpperCase();
+
+            // Cover
+            document.getElementById("profileName").textContent = user.fullName || "Student";
+            document.getElementById("profileEmail").textContent = user.email || "";
+            document.getElementById("profileLargeAvatar").textContent = firstName.charAt(0).toUpperCase();
+
+            // View Details
+            document.getElementById("profileBio").textContent = user.bio || "No bio added yet. Tell people about yourself!";
+            
+            let displayBranch = user.branch || "General";
+            if (user.branch === "ME") displayBranch = "Mechanical";
+            const displayYear = user.year ? `${user.year}${getYearSuffix(user.year)} Year` : "Student";
+            document.getElementById("profileBranchYear").textContent = `${displayBranch} • ${displayYear}`;
+            document.getElementById("profileIdNumber").textContent = user.studentId || "Not specified";
+
+            // Skills tags
+            const skillsContainer = document.getElementById("profileSkills");
+            if (user.skills && user.skills.length > 0) {
+                skillsContainer.innerHTML = user.skills.map(s => `<span>${escapeHTML(s.trim())}</span>`).join("");
+            } else {
+                skillsContainer.innerHTML = `<span>No skills added yet</span>`;
+            }
+
+            // Populate Form Fields
+            document.getElementById("editFullName").value = user.fullName || "";
+            document.getElementById("editStudentId").value = user.studentId || "";
+            document.getElementById("editBranch").value = user.branch || "CSE";
+            document.getElementById("editYear").value = user.year || "1";
+            document.getElementById("editBio").value = user.bio || "";
+            document.getElementById("editSkills").value = user.skills ? user.skills.join(", ") : "";
+        }
+
+        async function fetchLatestProfile() {
+            try {
+                const response = await fetch("/api/auth/profile", {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    currentUser = data.user;
+                    localStorage.setItem("campusconnect_user", JSON.stringify(currentUser));
+                    updateDisplay(currentUser);
+                }
+            } catch (error) {
+                console.error("Fetch profile error:", error);
+            }
+        }
+
+        async function fetchCampusStats() {
+            try {
+                const headers = { "Authorization": `Bearer ${token}` };
+                
+                // Fetch doubts count
+                const qRes = await fetch("/api/questions", { headers });
+                const qData = await qRes.json();
+                if (qData.success) {
+                    const doubtsCount = qData.questions.filter(q => q.user && (q.user._id === currentUser.id || q.user._id === currentUser._id)).length;
+                    document.getElementById("statDoubts").textContent = doubtsCount;
+                }
+
+                // Fetch items listed count
+                const pRes = await fetch("/api/products", { headers });
+                const pData = await pRes.json();
+                if (pData.success) {
+                    const productsCount = pData.products.filter(p => p.seller && (p.seller._id === currentUser.id || p.seller._id === currentUser._id)).length;
+                    document.getElementById("statProducts").textContent = productsCount;
+                }
+
+                // Fetch resources shared count
+                const rRes = await fetch("/api/resources", { headers });
+                const rData = await rRes.json();
+                if (rData.success) {
+                    const resourcesCount = rData.resources.filter(r => r.user && (r.user._id === currentUser.id || r.user._id === currentUser._id)).length;
+                    document.getElementById("statResources").textContent = resourcesCount;
+                }
+            } catch (error) {
+                console.error("Fetch stats error:", error);
+            }
+        }
+
+        function toggleEditMode() {
+            isEditing = !isEditing;
+            const viewCard = document.getElementById("profileViewDetails");
+            const editCard = document.getElementById("profileEditForm");
+            const btn = document.getElementById("toggleEditBtn");
+
+            if (isEditing) {
+                viewCard.classList.add("hidden");
+                editCard.classList.add("show");
+                btn.style.display = "none";
+            } else {
+                viewCard.classList.remove("hidden");
+                editCard.classList.remove("show");
+                btn.style.display = "block";
+            }
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+
+            const fullName = document.getElementById("editFullName").value.trim();
+            const studentId = document.getElementById("editStudentId").value.trim();
+            const branch = document.getElementById("editBranch").value;
+            const year = document.getElementById("editYear").value;
+            const bio = document.getElementById("editBio").value.trim();
+            const skillsStr = document.getElementById("editSkills").value.trim();
+
+            const skills = skillsStr ? skillsStr.split(",").map(s => s.trim()).filter(Boolean) : [];
+
+            try {
+                const response = await fetch("/api/auth/profile", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ fullName, studentId, branch, year, bio, skills })
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    // Update user in local storage
+                    currentUser = {
+                        ...currentUser,
+                        id: data.user.id || data.user._id,
+                        fullName: data.user.fullName,
+                        studentId: data.user.studentId,
+                        branch: data.user.branch,
+                        year: data.user.year,
+                        bio: data.user.bio,
+                        skills: data.user.skills
+                    };
+                    localStorage.setItem("campusconnect_user", JSON.stringify(currentUser));
+                    
+                    // Render details & exit editing mode
+                    updateDisplay(currentUser);
+                    toggleEditMode();
+                } else {
+                    alert("Failed to update profile: " + data.message);
+                }
+            } catch (error) {
+                console.error("Save profile error:", error);
+                alert("Server connection failed.");
+            }
+        }
+
+        function getYearSuffix(yr) {
+            const yrNum = parseInt(yr);
+            if (yrNum === 1) return "st";
+            if (yrNum === 2) return "nd";
+            if (yrNum === 3) return "rd";
+            return "th";
+        }
+
+        function escapeHTML(str) {
+            return str
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function logout() {
+            localStorage.removeItem("campusconnect_token");
+            localStorage.removeItem("campusconnect_user");
+            window.location.replace("/");
+        }
+    </script>
+</body>
+</html>

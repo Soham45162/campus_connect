@@ -47,6 +47,17 @@ const userSchema = new mongoose.Schema(
         isActive: {
             type: Boolean,
             default: true
+        },
+
+        bio: {
+            type: String,
+            trim: true,
+            default: ""
+        },
+
+        skills: {
+            type: [String],
+            default: []
         }
     },
     {

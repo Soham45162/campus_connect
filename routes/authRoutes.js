@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
@@ -289,6 +290,86 @@ router.post("/login", async (req, res) => {
 
     }
 
+});
+
+
+// ======================================================
+// GET PROFILE
+// ======================================================
+router.get("/profile", authMiddleware, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId).select("-password");
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+        res.json({ success: true, user });
+    } catch (error) {
+        console.error("GET PROFILE ERROR:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch profile." });
+    }
+});
+
+
+// ======================================================
+// UPDATE PROFILE
+// ======================================================
+router.put("/profile", authMiddleware, async (req, res) => {
+    try {
+        const { fullName, studentId, branch, year, bio, skills } = req.body;
+        const user = await User.findById(req.user.userId);
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found." });
+        }
+
+        if (fullName) user.fullName = fullName;
+        if (studentId !== undefined) user.studentId = studentId;
+        if (branch !== undefined) user.branch = branch;
+        if (year !== undefined) user.year = year;
+        if (bio !== undefined) user.bio = bio;
+        if (skills !== undefined) user.skills = skills;
+
+        await user.save();
+
+        res.json({
+            success: true,
+            message: "Profile updated successfully.",
+            user: {
+                id: user._id,
+                fullName: user.fullName,
+                email: user.email,
+                studentId: user.studentId,
+                branch: user.branch,
+                year: user.year,
+                bio: user.bio,
+                skills: user.skills
+            }
+        });
+    } catch (error) {
+        console.error("UPDATE PROFILE ERROR:", error);
+        res.status(500).json({ success: false, message: "Failed to update profile." });
+    }
+});
+
+
+// ======================================================
+// GET BUDDIES
+// ======================================================
+router.get("/buddies", authMiddleware, async (req, res) => {
+    try {
+        // Find all active users except the current user
+        const buddies = await User.find({
+            _id: { $ne: req.user.userId },
+            isActive: true
+        }).select("-password");
+
+        res.json({
+            success: true,
+            buddies
+        });
+    } catch (error) {
+        console.error("GET BUDDIES ERROR:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch buddies." });
+    }
 });
 
 

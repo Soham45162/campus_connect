@@ -18,6 +18,9 @@ const messageRoutes =
 const questionRoutes =
     require("./routes/questionRoutes");
 
+const resourceRoutes =
+    require("./routes/resourceRoutes");
+
 
 const app = express();
 
@@ -83,6 +86,12 @@ app.use(
 app.use(
     "/api/questions",
     questionRoutes
+);
+
+
+app.use(
+    "/api/resources",
+    resourceRoutes
 );
 
 
