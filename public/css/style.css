@@ -3958,6 +3958,109 @@ select {
     z-index: 50;
 }
 
+.sidebar-bottom {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(233, 227, 245, 0.4);
+}
+
+.campus-card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--green-light);
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.campus-card-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.campus-card strong {
+    display: block;
+    font-size: 9px;
+    color: var(--green);
+    font-weight: 700;
+}
+
+.campus-card small {
+    display: block;
+    font-size: 8px;
+    color: #3b7a57;
+    margin-top: 1px;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 6px;
+}
+
+.sidebar-user .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--purple-700), var(--purple-500));
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.sidebar-user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sidebar-user-info strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar-user-info small {
+    display: block;
+    font-size: 8px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+.more-btn {
+    border: 0;
+    background: transparent;
+    color: #9c929f;
+    font-size: 15px;
+    cursor: pointer;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    transition: .2s;
+}
+
+.more-btn:hover {
+    background: #faf5fc;
+    color: var(--purple-800);
+}
+
+
 /* Base Desktop Main Area */
 .main {
     margin-left: 250px;
