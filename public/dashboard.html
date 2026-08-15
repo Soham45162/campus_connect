@@ -1,416 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CampusConnect Dashboard</title>
-
-    <link rel="stylesheet" href="/css/style.css">
-
+    <title>CampusConnect | Student Community</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css?v=3">
 </head>
 
-<body class="dashboard-page">
+<body>
 
-    <!-- NAVBAR -->
-
-    <nav class="dashboard-nav">
-
-        <div class="dashboard-logo">
-            <div class="logo-icon">CC</div>
-
-            <span>
+<!-- =========================================
+     SIDEBAR
+========================================= -->
+<aside class="sidebar">
+    <div class="brand">
+        <div class="brand-mark">
+            <span>✦</span>
+        </div>
+        <div>
+            <div class="brand-name">
                 Campus<span>Connect</span>
-            </span>
-        </div>
-
-
-        <div class="nav-right">
-
-            <div class="user-mini" onclick="window.location.href='/profile.html'" style="cursor: pointer;">
-
-                <div class="user-avatar" id="userAvatar">
-                    U
-                </div>
-
-                <div>
-                    <strong id="navUserName">
-                        Student
-                    </strong>
-
-                    <small id="navStudentId">
-                        Student
-                    </small>
-                </div>
-
             </div>
-
-
-            <button
-                class="logout-btn"
-                onclick="logout()"
-            >
-                Logout
-            </button>
-
+            <div class="brand-subtitle">
+                Student ecosystem
+            </div>
         </div>
+    </div>
 
+    <nav class="navigation">
+        <div class="nav-label">
+            MENU
+        </div>
+        <button class="nav-item active" data-page="home">
+            <span class="nav-icon">⌂</span>
+            <span>Overview</span>
+        </button>
+        <button class="nav-item" data-page="study">
+            <span class="nav-icon">✎</span>
+            <span>Study Buddy</span>
+        </button>
+        <button class="nav-item" data-page="cart">
+            <span class="nav-icon">◫</span>
+            <span>Campus Cart</span>
+        </button>
+        <button class="nav-item" data-page="messages">
+            <span class="nav-icon">○</span>
+            <span>Messages</span>
+        </button>
+
+        <div class="nav-label second">
+            PERSONAL
+        </div>
+        <button class="nav-item" data-page="saved">
+            <span class="nav-icon">♡</span>
+            <span>Saved</span>
+        </button>
+        <button class="nav-item" data-page="profile">
+            <span class="nav-icon">◯</span>
+            <span>My Profile</span>
+        </button>
     </nav>
 
-
-    <!-- MAIN -->
-
-    <main class="dashboard-main">
-
-
-        <!-- WELCOME -->
-
-        <section class="welcome-section">
-
+    <div class="sidebar-bottom">
+        <div class="campus-card">
+            <div class="campus-card-icon">
+                ✓
+            </div>
             <div>
-
-                <p class="welcome-label">
-                    YOUR CAMPUS. YOUR COMMUNITY.
-                </p>
-
-                <h1>
-                    Welcome back,
-                    <span id="welcomeName">
-                        Student
-                    </span> 👋
-                </h1>
-
-                <p>
-                    What would you like to do today?
-                </p>
-
+                <strong>Verified campus</strong>
+                <small id="sidebarCampusName">MIT College</small>
             </div>
+        </div>
 
-        </section>
+        <div class="sidebar-user">
+            <div class="avatar" id="sidebarUserAvatar">SK</div>
+            <div class="sidebar-user-info">
+                <strong id="sidebarUserName">Soham Kedar</strong>
+                <small id="sidebarUserMeta">CSE · 2nd Year</small>
+            </div>
+            <button class="more-btn" id="logoutBtn" title="Logout" style="font-size: 14px; font-weight: bold; transform: rotate(90deg); cursor: pointer;">✏</button>
+        </div>
+    </div>
+</aside>
 
+<!-- =========================================
+     MOBILE TOPBAR
+========================================= -->
+<header class="mobile-header">
+    <div class="brand">
+        <div class="brand-mark">
+            ✦
+        </div>
+        <div class="brand-name">
+            Campus<span>Connect</span>
+        </div>
+    </div>
+    <button id="mobileMenu">
+        ☰
+    </button>
+</header>
 
-        <!-- TWO MAIN FEATURES -->
+<!-- =========================================
+     MAIN
+========================================= -->
+<main class="main">
 
-        <section class="feature-grid">
+    <!-- TOP BAR -->
+    <header class="topbar">
+        <div>
+            <div class="eyebrow" id="topbarDate">
+                THURSDAY · AUGUST 14, 2026
+            </div>
+            <h1 id="pageTitle">
+                Good morning, Soham.
+            </h1>
+        </div>
 
+        <div class="top-actions">
+            <button class="icon-button" style="display: none;">
+                <span>⌕</span>
+            </button>
+            <button class="notification-button" style="display: none;">
+                <span>♧</span>
+                <i></i>
+            </button>
+            <div class="top-avatar" id="topbarAvatar">
+                SK
+            </div>
+        </div>
+    </header>
 
-            <!-- STUDY BUDDY -->
-
-            <div
-                class="feature-card study-card"
-                onclick="openStudyBuddy()"
-            >
-
-                <div class="feature-top">
-
-                    <div class="feature-icon">
-                        📚
-                    </div>
-
-                    <span class="arrow">
-                        →
-                    </span>
-
+    <!-- =====================================
+         HOME (OVERVIEW)
+    ====================================== -->
+    <section class="page active" id="home">
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-content">
+                <div class="hero-tag">
+                    <span>✦</span>
+                    YOUR CAMPUS, CONNECTED
                 </div>
-
-
                 <h2>
-                    Study Buddy
+                    Find your people.<br>
+                    <em>Learn & trade together.</em>
                 </h2>
-
                 <p>
-                    Find classmates, ask questions,
-                    share notes and learn together.
+                    One trusted space to find study partners, exchange knowledge, and give your unused campus essentials a second life.
                 </p>
-
-
-                <div class="feature-tags">
-
-                    <span>
-                        Doubts
-                    </span>
-
-                    <span>
-                        Notes
-                    </span>
-
-                    <span>
-                        Peer Learning
-                    </span>
-
+                <div class="hero-buttons">
+                    <button class="button button-light" data-go="study">
+                        Explore Study Buddy <span>→</span>
+                    </button>
+                    <button class="button button-outline" data-go="cart">
+                        Browse Campus Cart
+                    </button>
                 </div>
-
-
-                <button class="feature-button">
-                    Explore Study Buddy →
-                </button>
-
             </div>
 
-
-            <!-- CAMPUS CART -->
-
-            <div
-                class="feature-card cart-card"
-                onclick="openCampusCart()"
-            >
-
-                <div class="feature-top">
-
-                    <div class="feature-icon">
-                        🛒
+            <div class="hero-visual">
+                <div class="orb orb-one"></div>
+                <div class="orb orb-two"></div>
+                <div class="floating-card note-card" style="cursor: pointer;" data-go="study">
+                    <div class="floating-icon lavender">✎</div>
+                    <div>
+                        <strong>Study Buddy</strong>
+                        <small>Learn together</small>
                     </div>
+                </div>
+                <div class="floating-card cart-card" style="cursor: pointer;" data-go="cart">
+                    <div class="floating-icon cream">◫</div>
+                    <div>
+                        <strong>Campus Cart</strong>
+                        <small>Buy & sell items</small>
+                    </div>
+                </div>
+                <div class="hero-circle">
+                    <div class="circle-inner">
+                        <span>✦</span>
+                        <strong>Connect</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                    <span class="arrow">
-                        →
-                    </span>
+        <!-- QUICK MODULES -->
+        <div class="section-heading">
+            <div>
+                <span class="section-kicker">EXPLORE</span>
+                <h3>Your campus, two ways</h3>
+            </div>
+            <span class="section-note">Everything starts with a connection.</span>
+        </div>
 
+        <div class="module-grid">
+            <article class="module-card study-module" data-go="study">
+                <div class="module-top">
+                    <div class="module-icon">✎</div>
+                    <span class="arrow-circle">↗</span>
+                </div>
+                <span class="module-label">LEARN · SHARE · CONNECT</span>
+                <h3>Study Buddy</h3>
+                <p>Find students who actually know the subject. Ask doubts, share notes, and learn together.</p>
+                <div class="module-footer">
+                    <div class="mini-avatars" id="homeBuddiesMini">
+                        <span>AP</span>
+                        <span>RK</span>
+                        <span>VM</span>
+                    </div>
+                    <span id="homeQuestionsCountText">Active doubts</span>
+                </div>
+            </article>
+
+            <article class="module-card cart-module" data-go="cart">
+                <div class="module-top">
+                    <div class="module-icon">◫</div>
+                    <span class="arrow-circle">↗</span>
+                </div>
+                <span class="module-label">BUY · SELL · REUSE</span>
+                <h3>Campus Cart</h3>
+                <p>Give textbooks, calculators, stationery and lab equipment a second life within your campus.</p>
+                <div class="module-footer">
+                    <div class="mini-product">📚</div>
+                    <div class="mini-product">🧮</div>
+                    <div class="mini-product">🎧</div>
+                    <span id="homeProductsCountText">Listings available</span>
+                </div>
+            </article>
+        </div>
+
+        <!-- LOWER CONTENT -->
+        <div class="dashboard-grid">
+            <!-- QUESTIONS -->
+            <div class="content-panel">
+                <div class="panel-header">
+                    <div>
+                        <span class="section-kicker">STUDY BUDDY</span>
+                        <h3>Questions needing you</h3>
+                    </div>
+                    <button class="text-button" data-go="study">
+                        View all →
+                    </button>
+                </div>
+                <div class="question-list" id="homeQuestionsContainer">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <!-- ACTIVITY -->
+            <div class="content-panel activity-panel">
+                <div class="panel-header">
+                    <div>
+                        <span class="section-kicker">YOUR ACTIVITY</span>
+                        <h3>Activity Summary</h3>
+                    </div>
                 </div>
 
+                <div class="stats">
+                    <div class="stat">
+                        <span class="stat-icon purple">✎</span>
+                        <div>
+                            <strong id="statQuestionsCount">0</strong>
+                            <small>Questions</small>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon green">✓</span>
+                        <div>
+                            <strong id="statAnswersCount">0</strong>
+                            <small>Answers</small>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon gold">◫</span>
+                        <div>
+                            <strong id="statListingsCount">0</strong>
+                            <small>Listings</small>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-icon rose">♡</span>
+                        <div>
+                            <strong id="statSavedCount">0</strong>
+                            <small>Saved</small>
+                        </div>
+                    </div>
+                </div>
 
-                <h2>
-                    Campus Cart
-                </h2>
+                <div class="progress-area">
+                    <div class="progress-heading">
+                        <span>Profile Completion / Activity</span>
+                        <strong id="statContributionPercent">0%</strong>
+                    </div>
+                    <div class="progress">
+                        <span id="statContributionBar" style="width: 0%"></span>
+                    </div>
+                    <p id="contributionStatusMessage">Fill out your profile and participate in discussions to increase stats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                <p>
-                    Buy and sell textbooks, stationery,
-                    lab equipment and other student resources.
+    <!-- =====================================
+         STUDY BUDDY
+    ====================================== -->
+    <section class="page" id="study">
+        <div class="page-hero purple-page">
+            <div>
+                <span class="section-kicker">STUDY BUDDY</span>
+                <h2>Learn with people<br><em>who get it.</em></h2>
+                <p>Ask questions, share knowledge, find prepared peers and discover useful study material.</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="button button-dark" id="askQuestionButton">+ Ask a doubt</button>
+                <button class="button button-light" id="shareResourceButton" style="display: none;">+ Share resource</button>
+            </div>
+        </div>
+
+        <div class="study-tabs">
+            <button class="tab active" data-tab="questions">Questions</button>
+            <button class="tab" data-tab="resources">Study Resources</button>
+            <button class="tab" data-tab="buddies">Find Study Buddies</button>
+        </div>
+
+        <div class="study-toolbar">
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search questions, subjects or topics..." id="questionSearch">
+            </div>
+            <select id="subjectFilter">
+                <option value="all">All Subjects / Branches</option>
+                <option value="Java">Java</option>
+                <option value="DBMS">DBMS</option>
+                <option value="Computer Graphics">Computer Graphics</option>
+                <option value="Python">Python</option>
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="ECE">ECE</option>
+                <option value="ME">Mechanical</option>
+            </select>
+        </div>
+
+        <div class="questions-page-list" id="studyContainer">
+            <!-- Injected via JS (renders Questions, Resources, or Buddies) -->
+        </div>
+    </section>
+
+    <!-- =====================================
+         CAMPUS CART
+    ====================================== -->
+    <section class="page" id="cart">
+        <div class="page-hero cart-page">
+            <div>
+                <span class="section-kicker">CAMPUS CART</span>
+                <h2>Give useful things<br><em>a second life.</em></h2>
+                <p>Buy and resell academic essentials directly with students on your campus.</p>
+            </div>
+            <button class="button button-dark" id="sellItemButton">+ Sell an item</button>
+        </div>
+
+        <div class="cart-toolbar">
+            <div class="search-box">
+                <span>⌕</span>
+                <input type="text" placeholder="Search textbooks, calculators, lab equipment..." id="productSearch">
+            </div>
+            <div class="category-buttons" id="categoryButtons">
+                <button class="category active" data-category="all">All</button>
+                <button class="category" data-category="Books">Books</button>
+                <button class="category" data-category="Electronics">Electronics</button>
+                <button class="category" data-category="Stationery">Stationery</button>
+                <button class="category" data-category="Lab Equipment">Lab Equipment</button>
+            </div>
+        </div>
+
+        <div class="cart-info">
+            <span id="productsCount">0 items available</span>
+            <span>Sorted by newest</span>
+        </div>
+
+        <div class="products-grid" id="productsContainer">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
+    <!-- =====================================
+         MESSAGES
+    ====================================== -->
+    <section class="page" id="messages">
+        <div class="page-hero simple-page">
+            <div>
+                <span class="section-kicker">MESSAGES</span>
+                <h2>Conversations that<br><em>move things forward.</em></h2>
+            </div>
+        </div>
+
+        <div class="messages-layout">
+            <div class="conversation-list">
+                <div class="conversation-search">
+                    ⌕
+                    <input placeholder="Search conversations" id="conversationSearchInput">
+                </div>
+                <div id="conversationListContainer">
+                    <!-- Injected via JS -->
+                </div>
+            </div>
+
+            <div class="chat-window">
+                <div class="chat-header">
+                    <div class="person">
+                        <div class="avatar" id="chatPartnerAvatar">?</div>
+                        <div>
+                            <strong id="chatPartnerName">Select a student</strong>
+                            <small id="chatPartnerMeta">Choose from list to start chatting</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-body" id="chatMessagesBody">
+                    <div style="text-align: center; color: var(--muted); margin-top: 100px;">
+                        Select a chat partner from the sidebar or click "Contact Seller/Message Buddy" to start.
+                    </div>
+                </div>
+
+                <form class="chat-input" id="chatInputForm">
+                    <input placeholder="Write a message..." id="chatMessageInput" required autocomplete="off">
+                    <button type="submit">↑</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================
+         SAVED
+    ====================================== -->
+    <section class="page" id="saved">
+        <div class="page-hero simple-page">
+            <div>
+                <span class="section-kicker">SAVED</span>
+                <h2>Things worth<br><em>coming back to.</em></h2>
+            </div>
+        </div>
+        <div class="saved-grid" id="savedGrid">
+            <!-- Injected via JS -->
+        </div>
+    </section>
+
+    <!-- =====================================
+         PROFILE
+    ====================================== -->
+    <section class="page" id="profile">
+        <div class="profile-cover">
+            <div class="profile-large-avatar" id="profileLargeAvatar">SK</div>
+            <div>
+                <span class="verified-badge">✓ VERIFIED STUDENT</span>
+                <h2 id="profileName">Soham Kedar</h2>
+                <p id="profileBranchYear">Computer Science · 2nd Year</p>
+            </div>
+            <button class="button button-dark" id="editProfileBtn">Edit profile</button>
+        </div>
+
+        <div class="profile-grid">
+            <div class="profile-info-card">
+                <span class="section-kicker">ABOUT</span>
+                <p id="profileBio" style="margin-top: 10px; color: #665;">
+                    No bio description provided yet. Click Edit Profile to add one.
                 </p>
-
-
-                <div class="feature-tags">
-
-                    <span>
-                        Buy
-                    </span>
-
-                    <span>
-                        Sell
-                    </span>
-
-                    <span>
-                        Student Resources
-                    </span>
-
+                <div class="skills" id="profileSkills" style="margin-top: 15px;">
+                    <!-- Skills pills -->
                 </div>
-
-
-                <button class="feature-button">
-                    Explore Campus Cart →
-                </button>
-
             </div>
 
-
-        </section>
-
-
-        <!-- QUICK INFO -->
-
-        <section class="quick-section">
-
-            <div class="quick-card">
-
-                <div class="quick-icon">
-                    🎓
+            <div class="profile-info-card">
+                <span class="section-kicker">CAMPUS ACTIVITY</span>
+                <div class="profile-stat-row">
+                    <div>
+                        <strong id="profileQuestionsCount">0</strong>
+                        <small>Questions</small>
+                    </div>
+                    <div>
+                        <strong id="profileAnswersCount">0</strong>
+                        <small>Answers</small>
+                    </div>
+                    <div>
+                        <strong id="profileListingsCount">0</strong>
+                        <small>Listings</small>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
 
+</main>
+
+<!-- =========================================
+     ASK QUESTION MODAL
+========================================= -->
+<div class="modal-overlay" id="questionModal">
+    <div class="modal">
+        <button class="modal-close" data-close>×</button>
+        <span class="section-kicker">STUDY BUDDY</span>
+        <h2>Ask your doubt</h2>
+        <p>Someone on your campus might already know the answer.</p>
+
+        <form id="questionForm">
+            <label for="questionTitle">Question / Doubt Headline</label>
+            <input type="text" id="questionTitle" placeholder="What do you want to know?" required>
+
+            <label for="questionSubject">Subject</label>
+            <select id="questionSubject" required>
+                <option value="Java">Java</option>
+                <option value="DBMS">DBMS</option>
+                <option value="Computer Graphics">Computer Graphics</option>
+                <option value="Python">Python</option>
+            </select>
+
+            <label for="questionDescription">Explain your doubt</label>
+            <textarea id="questionDescription" rows="5" placeholder="Give a little context, explain what you tried..." required></textarea>
+
+            <button type="submit" class="button button-dark full">
+                Post question →
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- =========================================
+     SHARE RESOURCE MODAL
+========================================= -->
+<div class="modal-overlay" id="resourceModal">
+    <div class="modal">
+        <button class="modal-close" data-close>×</button>
+        <span class="section-kicker">STUDY BUDDY</span>
+        <h2>Share study resource</h2>
+        <p>Upload files or share reference links for other students.</p>
+
+        <form id="resourceForm">
+            <label for="resourceTitle">Resource Title</label>
+            <input type="text" id="resourceTitle" placeholder="e.g. Unit 3 DBMS Normalization Notes" required>
+
+            <div class="form-row">
                 <div>
-
-                    <strong>
-                        Student Community
-                    </strong>
-
-                    <p>
-                        Connect with students from your campus.
-                    </p>
-
+                    <label for="resourceSubject">Subject</label>
+                    <select id="resourceSubject" required>
+                        <option value="Java">Java</option>
+                        <option value="DBMS">DBMS</option>
+                        <option value="Computer Graphics">Computer Graphics</option>
+                        <option value="Python">Python</option>
+                    </select>
                 </div>
-
-            </div>
-
-
-            <div class="quick-card">
-
-                <div class="quick-icon">
-                    🔒
-                </div>
-
                 <div>
-
-                    <strong>
-                        Campus Verified
-                    </strong>
-
-                    <p>
-                        Built specifically for students.
-                    </p>
-
+                    <label for="resourceFileType">File Type</label>
+                    <select id="resourceFileType" required>
+                        <option value="PDF">PDF File</option>
+                        <option value="Document">Word Document</option>
+                        <option value="Link">Web Link</option>
+                        <option value="Zip">Zip Archive</option>
+                    </select>
                 </div>
-
             </div>
 
+            <label for="resourceFileUrl">Resource Link / File URL</label>
+            <input type="url" id="resourceFileUrl" placeholder="https://drive.google.com/... or dropbox link" required>
 
-            <div class="quick-card">
+            <label for="resourceDescription">Brief Description</label>
+            <textarea id="resourceDescription" rows="3" placeholder="Tell other students what this material covers..." required></textarea>
 
-                <div class="quick-icon">
-                    🤝
-                </div>
+            <button type="submit" class="button button-dark full">
+                Share material →
+            </button>
+        </form>
+    </div>
+</div>
 
+<!-- =========================================
+     SELL ITEM MODAL
+========================================= -->
+<div class="modal-overlay" id="sellModal">
+    <div class="modal">
+        <button class="modal-close" data-close>×</button>
+        <span class="section-kicker">CAMPUS CART</span>
+        <h2>List an item</h2>
+        <p>Help another student find something they need.</p>
+
+        <form id="sellForm">
+            <label for="sellName">Item name</label>
+            <input type="text" id="sellName" placeholder="e.g. Casio Scientific Calculator FX-991ES" required>
+
+            <div class="form-row">
                 <div>
-
-                    <strong>
-                        Peer to Peer
-                    </strong>
-
-                    <p>
-                        Learn, share and exchange resources.
-                    </p>
-
+                    <label for="sellPrice">Price (₹)</label>
+                    <input type="number" id="sellPrice" placeholder="500" required min="0">
                 </div>
-
+                <div>
+                    <label for="sellCategory">Category</label>
+                    <select id="sellCategory" required>
+                        <option value="Books">Books</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Stationery">Stationery</option>
+                        <option value="Lab Equipment">Lab Equipment</option>
+                    </select>
+                </div>
             </div>
 
-        </section>
+            <label for="sellCondition">Condition</label>
+            <select id="sellCondition" required>
+                <option value="Like New">Like New</option>
+                <option value="Good">Good</option>
+                <option value="Used">Used</option>
+            </select>
 
+            <label for="sellLocation">Pickup Location</label>
+            <input type="text" id="sellLocation" placeholder="e.g. Hostel Block A Room 204 or Library" required>
 
-    </main>
+            <label for="sellDescription">Description</label>
+            <textarea id="sellDescription" rows="4" placeholder="Tell buyers about your item's state, edition, age..." required></textarea>
 
+            <button type="submit" class="button button-dark full">
+                Publish listing →
+            </button>
+        </form>
+    </div>
+</div>
 
-    <script>
+<!-- =========================================
+     QUESTION DETAILS MODAL
+========================================= -->
+<div class="modal-overlay" id="questionDetailModal">
+    <div class="modal" style="width: 650px; max-width: 95vw;">
+        <button class="modal-close" data-close>×</button>
+        <span class="subject-pill" id="detailSubjectPill" style="margin-bottom: 10px;">JAVA</span>
+        <h2 id="detailQuestionTitle" style="font-size: 22px; margin-bottom: 10px;">Question title?</h2>
+        
+        <div class="person" style="margin: 15px 0; padding-bottom: 15px; border-bottom: 1px solid var(--border);">
+            <div class="avatar" id="detailQuestionAuthorAvatar">RS</div>
+            <div>
+                <strong id="detailQuestionAuthor">Rahul Sharma</strong>
+                <small id="detailQuestionMeta">CSE · 2nd Year · 5 mins ago</small>
+            </div>
+        </div>
 
-        // =====================================
-        // GET LOGIN DATA
-        // =====================================
+        <p id="detailQuestionBody" style="line-height: 1.7; color: var(--text); font-size: 13px; margin-bottom: 25px;">
+            Full detail text goes here...
+        </p>
 
-        const token =
-            localStorage.getItem(
-                "campusconnect_token"
-            );
+        <span class="section-kicker">ANSWERS (<span id="detailAnswersCount">0</span>)</span>
+        <div id="answersListContainer" style="margin-top: 15px; margin-bottom: 25px; display: grid; gap: 15px; max-height: 250px; overflow-y: auto;">
+            <!-- Answers list dynamically injected -->
+        </div>
 
+        <span class="section-kicker">YOUR ANSWER</span>
+        <form id="answerForm" style="margin-top: 10px;">
+            <textarea id="answerText" rows="4" placeholder="Type your answer, solution, or guidance..." required></textarea>
+            <button type="submit" class="button button-dark full" style="margin-top: 10px;">
+                Submit Answer →
+            </button>
+        </form>
+    </div>
+</div>
 
-        const savedUser =
-            localStorage.getItem(
-                "campusconnect_user"
-            );
+<!-- =========================================
+     EDIT PROFILE MODAL
+========================================= -->
+<div class="modal-overlay" id="editProfileModal">
+    <div class="modal">
+        <button class="modal-close" data-close>×</button>
+        <span class="section-kicker">MY PROFILE</span>
+        <h2>Edit Profile</h2>
+        <p>Update your details displayed on the campus platform.</p>
 
+        <form id="editProfileForm">
+            <label for="editFullName">Full Name</label>
+            <input type="text" id="editFullName" required>
 
-        // =====================================
-        // PROTECT DASHBOARD
-        // =====================================
+            <div class="form-row">
+                <div>
+                    <label for="editBranch">Branch</label>
+                    <select id="editBranch">
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="ECE">ECE</option>
+                        <option value="ME">Mechanical</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="editYear">Year</label>
+                    <select id="editYear">
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                        <option value="4">Final Year</option>
+                    </select>
+                </div>
+            </div>
 
-        if (!token || !savedUser) {
+            <label for="editBio">About Me (Bio)</label>
+            <textarea id="editBio" rows="3" placeholder="Tell classmates about your interest, study goals..."></textarea>
 
-            window.location.replace("/");
+            <label for="editSkills">Skills (comma separated)</label>
+            <input type="text" id="editSkills" placeholder="Java, Python, DBMS, SolidWorks">
 
-        }
+            <button type="submit" class="button button-dark full" style="margin-top: 15px;">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>
 
-
-        let user;
-
-        try {
-
-            user = JSON.parse(savedUser);
-
-        } catch (error) {
-
-            localStorage.removeItem(
-                "campusconnect_token"
-            );
-
-            localStorage.removeItem(
-                "campusconnect_user"
-            );
-
-            window.location.replace("/");
-
-        }
-
-
-        // =====================================
-        // DISPLAY USER
-        // =====================================
-
-        if (user) {
-
-            const firstName =
-                user.fullName
-                    ? user.fullName.split(" ")[0]
-                    : "Student";
-
-
-            document.getElementById(
-                "welcomeName"
-            ).textContent = firstName;
-
-
-            document.getElementById(
-                "navUserName"
-            ).textContent =
-                user.fullName || "Student";
-
-
-            document.getElementById(
-                "navStudentId"
-            ).textContent =
-                user.studentId || "Student";
-
-
-            document.getElementById(
-                "userAvatar"
-            ).textContent =
-                firstName
-                    .charAt(0)
-                    .toUpperCase();
-
-        }
-
-
-        // =====================================
-        // STUDY BUDDY
-        // =====================================
-
-        function openStudyBuddy() {
-
-            window.location.href = "/study-buddy.html";
-
-        }
-
-
-        // =====================================
-        // CAMPUS CART
-        // =====================================
-
-        function openCampusCart() {
-
-            window.location.href = "/campus-cart.html";
-
-        }
-
-
-        // =====================================
-        // LOGOUT
-        // =====================================
-
-        function logout() {
-
-            localStorage.removeItem(
-                "campusconnect_token"
-            );
-
-            localStorage.removeItem(
-                "campusconnect_user"
-            );
-
-            window.location.replace("/");
-
-        }
-
-    </script>
+<script src="/js/dashboard.js"></script>
 
 </body>
-
 </html>
