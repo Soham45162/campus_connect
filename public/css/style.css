@@ -58,6 +58,7 @@ html {
 
 body {
     font-family:
+        "Plus Jakarta Sans",
         Inter,
         "Segoe UI",
         Roboto,
@@ -4160,3 +4161,115 @@ select {
     font-size: 10px;
     margin-top: 1px;
 }
+
+
+/* =========================================================
+   PREMIUM VISUAL EFFECT DESIGNS (TRANSITIONS & GLASSMORPHISM)
+   ========================================================= */
+
+/* Soft background ambient glowing gradients */
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: -15%;
+    left: -15%;
+    width: 65%;
+    height: 65%;
+    background: radial-gradient(circle, rgba(109, 40, 217, 0.05), transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    bottom: -15%;
+    right: -15%;
+    width: 65%;
+    height: 65%;
+    background: radial-gradient(circle, rgba(124, 58, 237, 0.04), transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Glassmorphism Sidebar */
+.sidebar {
+    background: rgba(255, 255, 255, 0.70) !important;
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-right: 1px solid rgba(124, 58, 237, 0.08) !important;
+}
+
+/* Sidebar Nav item premium spring transitions */
+.nav-item {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-item:hover {
+    transform: translateX(4px);
+    background: rgba(124, 58, 237, 0.05) !important;
+    color: var(--purple-800) !important;
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, rgba(109, 40, 217, 0.08) 0%, rgba(124, 58, 237, 0.03) 100%) !important;
+    color: var(--purple-800) !important;
+    border-left: 3px solid var(--purple-700) !important;
+    box-shadow: 0 4px 15px -3px rgba(109, 40, 217, 0.05) !important;
+}
+
+/* Interactive scale bounce for buttons */
+.button, .primary-btn, .secondary-btn, .contact-button {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.button:active, .primary-btn:active, .secondary-btn:active, .contact-button:active {
+    transform: scale(0.97) translateY(0) !important;
+}
+
+/* Float Animations for Hero Cards */
+@keyframes floatCard {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-7px); }
+    100% { transform: translateY(0px); }
+}
+
+.note-card {
+    animation: floatCard 6s ease-in-out infinite !important;
+}
+
+.cart-card {
+    animation: floatCard 6s ease-in-out infinite 3s !important;
+}
+
+/* Slow spin pulse for Hero Orbs */
+@keyframes slowPulse {
+    0% { transform: scale(1) rotate(0deg); opacity: 0.9; }
+    50% { transform: scale(1.02) rotate(180deg); opacity: 1; }
+    100% { transform: scale(1) rotate(360deg); opacity: 0.9; }
+}
+
+.orb-one {
+    animation: slowPulse 20s linear infinite !important;
+}
+
+.orb-two {
+    animation: slowPulse 30s linear infinite reverse !important;
+}
+
+/* Premium Card hover lifts and border glows */
+.content-panel, .module-card, .product-card, .large-question, .profile-info-card {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.content-panel:hover, .module-card:hover, .product-card:hover, .large-question:hover, .profile-info-card:hover {
+    transform: translateY(-3px) !important;
+    border-color: rgba(124, 58, 237, 0.25) !important;
+    box-shadow: 0 20px 40px -15px rgba(109, 40, 217, 0.08) !important;
+}
+
