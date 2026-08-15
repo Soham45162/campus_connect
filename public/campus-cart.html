@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Cart | CampusConnect</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-page">
+
+    <!-- NAVBAR -->
+    <nav class="dashboard-nav">
+        <div class="dashboard-logo" onclick="window.location.href='/dashboard.html'" style="cursor: pointer;">
+            <div class="logo-icon">CC</div>
+            <span>
+                Campus<span>Connect</span>
+            </span>
+        </div>
+
+        <div class="nav-right">
+            <div class="user-mini">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div>
+                    <strong id="navUserName">Student</strong>
+                    <small id="navStudentId">Student</small>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="dashboard-main">
+
+        <!-- HERO SECTION -->
+        <div class="page-hero cart-page">
+            <div>
+                <span class="section-kicker">CAMPUS CART</span>
+                <h2>Give useful things<br><em>a second life.</em></h2>
+                <p>Buy and resell academic essentials directly with students on your campus.</p>
+            </div>
+            <button class="button button-light" id="sellItemButton">+ Sell an item</button>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="cart-toolbar">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search textbooks, calculators, lab equipment..." id="productSearch">
+            </div>
+
+            <div class="category-buttons" id="categoryButtons">
+                <button class="category active" data-category="all">All</button>
+                <button class="category" data-category="Books">Books</button>
+                <button class="category" data-category="Electronics">Electronics</button>
+                <button class="category" data-category="Stationery">Stationery</button>
+                <button class="category" data-category="Lab Equipment">Lab Equipment</button>
+            </div>
+        </div>
+
+        <!-- LIST INFO -->
+        <div class="cart-info">
+            <span id="itemsCount">0 items available</span>
+            <span>Sorted by newest</span>
+        </div>
+
+        <!-- LIST CONTAINER -->
+        <div class="products-grid" id="productsContainer">
+            <!-- Dynamic listings go here -->
+            <div style="text-align: center; padding: 40px; color: #8b8291; grid-column: span 4;">
+                Loading listings...
+            </div>
+        </div>
+
+    </main>
+
+    <!-- LIST AN ITEM MODAL -->
+    <div class="modal-overlay" id="sellModal">
+        <div class="modal">
+            <button class="modal-close" id="closeSellModal">×</button>
+            <span class="section-kicker">CAMPUS CART</span>
+            <h2>List an item</h2>
+            <p>Help another student find something they need.</p>
+            
+            <form id="sellForm">
+                <label for="newProductName">Item Name</label>
+                <input type="text" id="newProductName" placeholder="e.g. Herbert Schildt Java Programming book" required>
+
+                <div class="form-row">
+                    <div>
+                        <label for="newProductPrice">Price (INR)</label>
+                        <input type="number" id="newProductPrice" placeholder="e.g. 300" min="0" required>
+                    </div>
+                    <div>
+                        <label for="newProductCategory">Category</label>
+                        <select id="newProductCategory">
+                            <option value="Books">Books</option>
+                            <option value="Electronics">Electronics</option>
+                            <option value="Stationery">Stationery</option>
+                            <option value="Lab Equipment">Lab Equipment</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label for="newProductCondition">Condition</label>
+                <select id="newProductCondition">
+                    <option value="Like New">Like New</option>
+                    <option value="Good">Good</option>
+                    <option value="Used">Used</option>
+                </select>
+
+                <label for="newProductLocation">Pickup Location</label>
+                <input type="text" id="newProductLocation" placeholder="e.g. Library Block, Hostel 3" required>
+
+                <label for="newProductDesc">Description</label>
+                <textarea id="newProductDesc" rows="4" placeholder="Tell buyers about your item (condition details, negotiation etc.)" required></textarea>
+
+                <button type="submit" class="button button-dark full" style="margin-top: 15px;">Publish listing →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MESSAGES / CHAT MODAL -->
+    <div class="modal-overlay" id="chatModal">
+        <div class="modal" style="max-width: 480px; padding: 0; overflow: hidden; height: 500px; display: flex; flex-direction: column;">
+            
+            <div style="background: #faf8fb; padding: 15px 20px; border-bottom: 1px solid #e9e2ed; display: flex; align-items: center; justify-content: space-between;">
+                <div class="person">
+                    <div class="avatar small" id="chatSellerAvatar" style="width: 28px; height: 28px; border-radius: 8px; background: #6d28d9; color: white; display: grid; place-items: center; font-size: 10px; font-weight: 700;">U</div>
+                    <div>
+                        <strong id="chatSellerName" style="font-size: 11px;">Seller Name</strong>
+                        <small id="chatSellerMeta" style="font-size: 9px; color: #8b8291;">Seller Class</small>
+                    </div>
+                </div>
+                <button class="modal-close" id="closeChatModal" style="position: static; border-radius: 50%; font-size: 16px; background: #eee8f5; border: 0; width: 28px; height: 28px; cursor: pointer; display: grid; place-items: center;">×</button>
+            </div>
+            
+            <div id="chatMessagesBody" style="flex: 1; overflow-y: auto; padding: 20px; background: #fdfcfd; display: flex; flex-direction: column; gap: 8px;">
+                <!-- Chat messages go here -->
+            </div>
+
+            <form id="chatInputForm" style="display: flex; border-top: 1px solid #e9e2ed; padding: 10px;">
+                <input type="text" id="chatMessageInput" placeholder="Type your message to the seller..." style="flex: 1; border: 1px solid #e9e2ed; padding: 8px 12px; border-radius: 8px; font-size: 11px;" required autocomplete="off">
+                <button type="submit" class="button button-dark" style="margin-left: 8px; padding: 8px 15px; border-radius: 8px; font-size: 11px;">Send</button>
+            </form>
+
+        </div>
+    </div>
+
+    <script src="/js/campus-cart.js"></script>
+</body>
+</html>

@@ -1,47 +1,41 @@
+require("dotenv").config();
+
 const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
 const path = require("path");
 
+const connectDB =
+    require("./backend/config/db");
 
-// ==========================================
-// ENVIRONMENT VARIABLES
-// ==========================================
+const authRoutes =
+    require("./routes/authRoutes");
 
-dotenv.config();
+const productRoutes =
+    require("./routes/productRoutes");
 
+const messageRoutes =
+    require("./routes/messageRoutes");
 
-// ==========================================
-// DATABASE
-// ==========================================
+const questionRoutes =
+    require("./routes/questionRoutes");
 
-const connectDB = require("./backend/config/db");
-
-
-// ==========================================
-// ROUTES
-// ==========================================
-
-const authRoutes = require("./routes/authRoutes");
-const productRoutes = require("./routes/productRoutes");
-const questionRoutes = require("./routes/questionRoutes");
-const messageRoutes = require("./routes/messageRoutes");
-
-
-// ==========================================
-// EXPRESS APP
-// ==========================================
 
 const app = express();
 
 
-// ==========================================
+// ======================================================
+// DATABASE
+// ======================================================
+
+connectDB();
+
+
+// ======================================================
 // MIDDLEWARE
-// ==========================================
+// ======================================================
 
-app.use(cors());
-
-app.use(express.json());
+app.use(
+    express.json()
+);
 
 app.use(
     express.urlencoded({
@@ -50,42 +44,35 @@ app.use(
 );
 
 
-// ==========================================
+// ======================================================
 // STATIC FRONTEND
-// ==========================================
+// ======================================================
 
 app.use(
     express.static(
-        path.join(__dirname, "public")
+        path.join(
+            __dirname,
+            "public"
+        )
     )
 );
 
 
-// ==========================================
-// DATABASE CONNECTION
-// ==========================================
-
-connectDB();
-
-
-// ==========================================
+// ======================================================
 // API ROUTES
-// ==========================================
+// ======================================================
 
 app.use(
     "/api/auth",
     authRoutes
 );
 
+
 app.use(
     "/api/products",
     productRoutes
 );
 
-app.use(
-    "/api/questions",
-    questionRoutes
-);
 
 app.use(
     "/api/messages",
@@ -93,23 +80,15 @@ app.use(
 );
 
 
-// ==========================================
-// TEST API
-// ==========================================
-
-app.get("/api/test", (req, res) => {
-
-    res.json({
-        success: true,
-        message: "CampusConnect API is working 🚀"
-    });
-
-});
+app.use(
+    "/api/questions",
+    questionRoutes
+);
 
 
-// ==========================================
-// FRONTEND HOME PAGE
-// ==========================================
+// ======================================================
+// HOME PAGE
+// ======================================================
 
 app.get("/", (req, res) => {
 
@@ -124,24 +103,38 @@ app.get("/", (req, res) => {
 });
 
 
-// ==========================================
-// ERROR HANDLER
-// ==========================================
+// ======================================================
+// API HEALTH CHECK
+// ======================================================
+
+app.get("/api/health", (req, res) => {
+
+    res.json({
+
+        success: true,
+
+        message:
+            "CampusConnect API is running."
+
+    });
+
+});
+
+
+// ======================================================
+// 404 API HANDLER
+// ======================================================
 
 app.use(
-    (err, req, res, next) => {
+    "/api",
+    (req, res) => {
 
-        console.error(
-            "❌ Server Error:",
-            err
-        );
-
-        res.status(500).json({
+        res.status(404).json({
 
             success: false,
 
             message:
-                "Internal server error"
+                "API route not found."
 
         });
 
@@ -149,9 +142,37 @@ app.use(
 );
 
 
-// ==========================================
+// ======================================================
+// ERROR HANDLER
+// ======================================================
+
+app.use(
+    (err, req, res, next) => {
+
+        console.error(
+            "SERVER ERROR:",
+            err
+        );
+
+        res.status(
+            err.status || 500
+        ).json({
+
+            success: false,
+
+            message:
+                err.message ||
+                "Internal server error."
+
+        });
+
+    }
+);
+
+
+// ======================================================
 // START SERVER
-// ==========================================
+// ======================================================
 
 const PORT =
     process.env.PORT || 5000;
@@ -161,48 +182,9 @@ app.listen(
     PORT,
     () => {
 
-        console.log("");
         console.log(
-            "======================================"
+            `🚀 CampusConnect running at http://localhost:${PORT}`
         );
-
-        console.log(
-            "       🎓 CAMPUS CONNECT"
-        );
-
-        console.log(
-            "======================================"
-        );
-
-        console.log(
-            `🚀 Server: http://localhost:${PORT}`
-        );
-
-        console.log(
-            `🌐 Website: http://localhost:${PORT}`
-        );
-
-        console.log(
-            `🔐 Auth: http://localhost:${PORT}/api/auth`
-        );
-
-        console.log(
-            `🛒 Cart: http://localhost:${PORT}/api/products`
-        );
-
-        console.log(
-            `📚 Study Buddy: http://localhost:${PORT}/api/questions`
-        );
-
-        console.log(
-            `💬 Messages: http://localhost:${PORT}/api/messages`
-        );
-
-        console.log(
-            "======================================"
-        );
-
-        console.log("");
 
     }
 );

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Buddy | CampusConnect</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="dashboard-page">
+
+    <!-- NAVBAR -->
+    <nav class="dashboard-nav">
+        <div class="dashboard-logo" onclick="window.location.href='/dashboard.html'" style="cursor: pointer;">
+            <div class="logo-icon">CC</div>
+            <span>
+                Campus<span>Connect</span>
+            </span>
+        </div>
+
+        <div class="nav-right">
+            <div class="user-mini">
+                <div class="user-avatar" id="userAvatar">U</div>
+                <div>
+                    <strong id="navUserName">Student</strong>
+                    <small id="navStudentId">Student</small>
+                </div>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <main class="dashboard-main">
+
+        <!-- HERO SECTION -->
+        <div class="page-hero purple-page">
+            <div>
+                <span class="section-kicker">STUDY BUDDY</span>
+                <h2>Learn with people<br><em>who get it.</em></h2>
+                <p>Ask questions, share knowledge, find prepared peers and discover useful study material.</p>
+            </div>
+            <button class="button button-light" id="askQuestionButton">+ Ask a doubt</button>
+        </div>
+
+        <!-- TABS -->
+        <div class="study-tabs">
+            <button class="tab active" data-tab="questions">Questions</button>
+            <button class="tab" data-tab="resources">Study Resources</button>
+            <button class="tab" data-tab="buddies">Find Study Buddies</button>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="study-toolbar">
+            <div class="search-box">
+                <span>🔍</span>
+                <input type="text" placeholder="Search questions, subjects or topics..." id="questionSearch">
+            </div>
+
+            <select id="subjectFilter">
+                <option value="all">All subjects</option>
+                <option value="CSE">CSE</option>
+                <option value="IT">IT</option>
+                <option value="ECE">ECE</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- LIST CONTAINER -->
+        <div class="questions-page-list" id="questionsContainer">
+            <!-- Dynamic questions go here -->
+            <div style="text-align: center; padding: 40px; color: #8b8291;">
+                Loading campus doubts...
+            </div>
+        </div>
+
+    </main>
+
+    <!-- ASK QUESTION MODAL -->
+    <div class="modal-overlay" id="questionModal">
+        <div class="modal">
+            <button class="modal-close" id="closeQuestionModal">×</button>
+            <span class="section-kicker">STUDY BUDDY</span>
+            <h2>Ask your doubt</h2>
+            <p>Someone on your campus might already know the answer.</p>
+            
+            <form id="questionForm">
+                <label for="newQuestionTitle">Question Title</label>
+                <input type="text" id="newQuestionTitle" placeholder="e.g. How does multilevel inheritance work in Java?" required>
+
+                <label for="newQuestionSubject">Subject / Category</label>
+                <select id="newQuestionSubject">
+                    <option value="CSE">CSE</option>
+                    <option value="IT">IT</option>
+                    <option value="ECE">ECE</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label for="newQuestionDesc">Explain your doubt</label>
+                <textarea id="newQuestionDesc" rows="5" placeholder="Give details about your question..." required></textarea>
+
+                <button type="submit" class="button button-dark full" style="margin-top: 15px;">Post question →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUESTION DETAIL / ANSWERS MODAL -->
+    <div class="modal-overlay" id="questionDetailModal">
+        <div class="modal" style="max-width: 600px;">
+            <button class="modal-close" id="closeDetailModal">×</button>
+            <span class="section-kicker" id="detailSubject">SUBJECT</span>
+            <h2 id="detailTitle">Question Title</h2>
+            <p id="detailDesc" style="color: #473a51; font-size: 12px; line-height: 1.6; margin-bottom: 20px; white-space: pre-line;">Question description...</p>
+            
+            <div class="person" style="margin-bottom: 20px;">
+                <div class="avatar small" id="detailAvatar" style="width: 32px; height: 32px; border-radius: 8px; background: #6d28d9; color: white; display: grid; place-items: center; font-size: 11px; font-weight: 700;">U</div>
+                <div>
+                    <strong id="detailAuthor" style="font-size: 11px;">Author</strong>
+                    <small id="detailMeta" style="font-size: 9px; color: #8b8291;">Branch</small>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid #e9e2ed; margin-bottom: 20px;">
+
+            <h3 style="font-size: 14px; margin-bottom: 10px;">Answers</h3>
+            <div id="answersContainer" style="display: flex; flex-direction: column; gap: 12px; max-height: 200px; overflow-y: auto; padding-right: 5px; margin-bottom: 20px;">
+                <!-- Answers go here -->
+            </div>
+
+            <form id="answerForm">
+                <label for="newAnswerText" style="font-weight: 700; font-size: 10px; margin-bottom: 8px;">Your Answer</label>
+                <textarea id="newAnswerText" rows="3" placeholder="Write your explanation or answer..." required></textarea>
+                <button type="submit" class="button button-dark full" style="margin-top: 12px;">Submit Answer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/study-buddy.js"></script>
+</body>
+</html>

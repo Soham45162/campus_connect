@@ -1,622 +1,302 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ======================================================
+// CAMPUSCONNECT FRONTEND
+// ======================================================
 
 
-    /* =====================================
-       PAGE NAVIGATION
-    ===================================== */
+// ======================================================
+// LOGIN
+// ======================================================
 
-    const navItems =
-        document.querySelectorAll(".nav-item");
-
-    const pages =
-        document.querySelectorAll(".page");
-
-    const pageTitle =
-        document.getElementById("pageTitle");
+const loginForm =
+    document.getElementById(
+        "loginForm"
+    );
 
 
-    const titles = {
+if (loginForm) {
 
-        home:
-            "Good morning, Soham.",
+    loginForm.addEventListener(
+        "submit",
+        async (event) => {
 
-        study:
-            "Study Buddy",
-
-        cart:
-            "Campus Cart",
-
-        messages:
-            "Your messages",
-
-        saved:
-            "Your saved things",
-
-        profile:
-            "Your campus profile"
-
-    };
+            event.preventDefault();
 
 
-    function openPage(pageName) {
-
-        pages.forEach(page => {
-
-            page.classList.remove("active");
-
-        });
-
-
-        const target =
-            document.getElementById(pageName);
+            const email =
+                document
+                    .getElementById(
+                        "loginEmail"
+                    )
+                    .value
+                    .trim();
 
 
-        if (target) {
-
-            target.classList.add("active");
-
-        }
-
-
-        navItems.forEach(item => {
-
-            item.classList.toggle(
-                "active",
-                item.dataset.page === pageName
-            );
-
-        });
+            const password =
+                document
+                    .getElementById(
+                        "loginPassword"
+                    )
+                    .value;
 
 
-        if (pageTitle) {
-
-            pageTitle.textContent =
-                titles[pageName] ||
-                "CampusConnect";
-
-        }
+            const message =
+                document.getElementById(
+                    "loginMessage"
+                );
 
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+            if (!email || !password) {
 
-    }
+                message.textContent =
+                    "Please enter email and password.";
+
+                message.style.color =
+                    "#dc2626";
+
+                return;
+
+            }
 
 
-    navItems.forEach(item => {
+            message.textContent =
+                "Logging in...";
 
-        item.addEventListener(
-            "click",
-            () => {
+            message.style.color =
+                "#7c3aed";
 
-                openPage(
-                    item.dataset.page
+
+            try {
+
+                const response =
+                    await fetch(
+                        "/api/auth/login",
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    email,
+                                    password
+
+                                })
+
+                        }
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                if (!response.ok) {
+
+                    message.textContent =
+                        data.message ||
+                        "Login failed.";
+
+                    message.style.color =
+                        "#dc2626";
+
+                    return;
+
+                }
+
+
+                // ==================================================
+                // SAVE LOGIN TOKEN
+                // ==================================================
+
+                localStorage.setItem(
+                    "campusconnect_token",
+                    data.token
+                );
+
+
+                // ==================================================
+                // SAVE USER
+                // ==================================================
+
+                localStorage.setItem(
+
+                    "campusconnect_user",
+
+                    JSON.stringify(
+                        data.user
+                    )
+
+                );
+
+
+                message.textContent =
+                    "Login successful!";
+
+                message.style.color =
+                    "#16a34a";
+
+
+                // ==================================================
+                // GO TO DASHBOARD
+                // ==================================================
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "/dashboard.html";
+
+                    },
+                    500
                 );
 
             }
-        );
 
-    });
+            catch (error) {
 
-
-    /* =====================================
-       HERO / MODULE NAVIGATION
-    ===================================== */
-
-    document
-        .querySelectorAll("[data-go]")
-        .forEach(element => {
-
-            element.addEventListener(
-                "click",
-                () => {
-
-                    openPage(
-                        element.dataset.go
-                    );
-
-                }
-            );
-
-        });
-
-
-    /* =====================================
-       QUESTION MODAL
-    ===================================== */
-
-    const questionModal =
-        document.getElementById(
-            "questionModal"
-        );
-
-
-    const askQuestionButton =
-        document.getElementById(
-            "askQuestionButton"
-        );
-
-
-    if (askQuestionButton) {
-
-        askQuestionButton.addEventListener(
-            "click",
-            () => {
-
-                questionModal.classList.add(
-                    "show"
+                console.error(
+                    "LOGIN ERROR:",
+                    error
                 );
 
-            }
-        );
+                message.textContent =
+                    "Cannot connect to server.";
 
-    }
-
-
-    /* =====================================
-       SELL MODAL
-    ===================================== */
-
-    const sellModal =
-        document.getElementById(
-            "sellModal"
-        );
-
-
-    const sellItemButton =
-        document.getElementById(
-            "sellItemButton"
-        );
-
-
-    if (sellItemButton) {
-
-        sellItemButton.addEventListener(
-            "click",
-            () => {
-
-                sellModal.classList.add(
-                    "show"
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================
-       CLOSE MODALS
-    ===================================== */
-
-    document
-        .querySelectorAll("[data-close]")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    questionModal.classList.remove(
-                        "show"
-                    );
-
-                    sellModal.classList.remove(
-                        "show"
-                    );
-
-                }
-            );
-
-        });
-
-
-    document
-        .querySelectorAll(".modal-overlay")
-        .forEach(overlay => {
-
-            overlay.addEventListener(
-                "click",
-                event => {
-
-                    if (
-                        event.target === overlay
-                    ) {
-
-                        overlay.classList.remove(
-                            "show"
-                        );
-
-                    }
-
-                }
-            );
-
-        });
-
-
-    /* =====================================
-       ESCAPE CLOSE
-    ===================================== */
-
-    document.addEventListener(
-        "keydown",
-        event => {
-
-            if (event.key === "Escape") {
-
-                questionModal.classList.remove(
-                    "show"
-                );
-
-                sellModal.classList.remove(
-                    "show"
-                );
+                message.style.color =
+                    "#dc2626";
 
             }
 
         }
     );
 
-
-    /* =====================================
-       QUESTION SEARCH
-    ===================================== */
-
-    const questionSearch =
-        document.getElementById(
-            "questionSearch"
-        );
+}
 
 
-    if (questionSearch) {
+// ======================================================
+// REGISTER TOGGLE & SUBMISSION
+// ======================================================
 
-        questionSearch.addEventListener(
-            "input",
-            () => {
+const showRegister = document.getElementById("showRegister");
+const showLogin = document.getElementById("showLogin");
+const loginSection = document.getElementById("loginSection");
+const registerSection = document.getElementById("registerSection");
 
-                const query =
-                    questionSearch.value
-                    .toLowerCase()
-                    .trim();
-
-
-                document
-                    .querySelectorAll(
-                        ".large-question"
-                    )
-                    .forEach(question => {
-
-                        const text =
-                            question.textContent
-                            .toLowerCase();
-
-
-                        question.style.display =
-                            text.includes(query)
-                            ? ""
-                            : "none";
-
-                    });
-
-            }
-        );
-
-    }
-
-
-    /* =====================================
-       SUBJECT FILTER
-    ===================================== */
-
-    const subjectFilter =
-        document.getElementById(
-            "subjectFilter"
-        );
-
-
-    if (subjectFilter) {
-
-        subjectFilter.addEventListener(
-            "change",
-            () => {
-
-                const value =
-                    subjectFilter.value;
-
-
-                document
-                    .querySelectorAll(
-                        ".large-question"
-                    )
-                    .forEach(question => {
-
-                        if (value === "all") {
-
-                            question.style.display =
-                                "";
-
-                            return;
-
-                        }
-
-
-                        const pill =
-                            question.querySelector(
-                                ".subject-pill"
-                            );
-
-
-                        if (!pill) return;
-
-
-                        const subject =
-                            pill.textContent
-                            .toLowerCase();
-
-
-                        question.style.display =
-                            subject.includes(value)
-                            ? ""
-                            : "none";
-
-                    });
-
-            }
-        );
-
-    }
-
-
-    /* =====================================
-       CART CATEGORIES
-    ===================================== */
-
-    const categories =
-        document.querySelectorAll(
-            ".category"
-        );
-
-
-    categories.forEach(category => {
-
-        category.addEventListener(
-            "click",
-            () => {
-
-                categories.forEach(item => {
-
-                    item.classList.remove(
-                        "active"
-                    );
-
-                });
-
-
-                category.classList.add(
-                    "active"
-                );
-
-            }
-        );
-
+if (showRegister && showLogin && loginSection && registerSection) {
+    showRegister.addEventListener("click", () => {
+        loginSection.classList.add("hidden");
+        registerSection.classList.remove("hidden");
     });
 
+    showLogin.addEventListener("click", () => {
+        registerSection.classList.add("hidden");
+        loginSection.classList.remove("hidden");
+    });
+}
 
-    /* =====================================
-       PRODUCT SEARCH
-    ===================================== */
+const registerForm = document.getElementById("registerForm");
+if (registerForm) {
+    registerForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    const productSearch =
-        document.getElementById(
-            "productSearch"
-        );
+        const fullName = document.getElementById("fullName").value.trim();
+        const email = document.getElementById("registerEmail").value.trim();
+        const studentId = document.getElementById("studentId").value.trim();
+        const branch = document.getElementById("branch").value;
+        const year = document.getElementById("year").value;
+        const password = document.getElementById("registerPassword").value;
+        const message = document.getElementById("registerMessage");
 
+        if (!fullName || !email || !studentId || !password) {
+            message.textContent = "Please fill in all required fields.";
+            message.style.color = "#dc2626";
+            return;
+        }
 
-    if (productSearch) {
+        message.textContent = "Creating account...";
+        message.style.color = "#7c3aed";
 
-        productSearch.addEventListener(
-            "input",
-            () => {
+        try {
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    fullName,
+                    email,
+                    studentId,
+                    branch,
+                    year,
+                    password
+                })
+            });
 
-                const query =
-                    productSearch.value
-                    .toLowerCase()
-                    .trim();
+            const data = await response.json();
 
-
-                document
-                    .querySelectorAll(
-                        ".product-card"
-                    )
-                    .forEach(product => {
-
-                        const text =
-                            product.textContent
-                            .toLowerCase();
-
-
-                        product.style.display =
-                            text.includes(query)
-                            ? ""
-                            : "none";
-
-                    });
-
+            if (!response.ok) {
+                message.textContent = data.message || "Registration failed.";
+                message.style.color = "#dc2626";
+                return;
             }
-        );
 
-    }
+            message.textContent = "Registration successful! You can now log in.";
+            message.style.color = "#16a34a";
+            registerForm.reset();
+
+            setTimeout(() => {
+                registerSection.classList.add("hidden");
+                loginSection.classList.remove("hidden");
+                document.getElementById("loginEmail").value = email;
+                message.textContent = "";
+            }, 1500);
+
+        } catch (error) {
+            console.error("REGISTER ERROR:", error);
+            message.textContent = "Cannot connect to server.";
+            message.style.color = "#dc2626";
+        }
+    });
+}
 
 
-    /* =====================================
-       HEART / SAVE BUTTONS
-    ===================================== */
+// ======================================================
+// LOGOUT
+// ======================================================
 
-    document
-        .querySelectorAll(".heart")
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                event => {
-
-                    event.stopPropagation();
+const logoutBtn =
+    document.getElementById(
+        "logoutBtn"
+    );
 
 
-                    if (
-                        button.textContent
-                        .trim() === "♡"
-                    ) {
+if (logoutBtn) {
 
-                        button.textContent =
-                            "♥";
+    logoutBtn.addEventListener(
+        "click",
+        () => {
 
-                        button.style.color =
-                            "#9c5b78";
-
-                    } else {
-
-                        button.textContent =
-                            "♡";
-
-                        button.style.color =
-                            "";
-
-                    }
-
-                }
+            localStorage.removeItem(
+                "campusconnect_token"
             );
 
-        });
 
-
-    /* =====================================
-       CONTACT SELLER
-    ===================================== */
-
-    document
-        .querySelectorAll(
-            ".contact-button"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    openPage("messages");
-
-                }
+            localStorage.removeItem(
+                "campusconnect_user"
             );
 
-        });
 
+            window.location.href =
+                "/";
 
-    /* =====================================
-       TABS
-    ===================================== */
+        }
+    );
 
-    document
-        .querySelectorAll(".tab")
-        .forEach(tab => {
-
-            tab.addEventListener(
-                "click",
-                () => {
-
-                    document
-                        .querySelectorAll(
-                            ".tab"
-                        )
-                        .forEach(item => {
-
-                            item.classList.remove(
-                                "active"
-                            );
-
-                        });
-
-
-                    tab.classList.add(
-                        "active"
-                    );
-
-                }
-            );
-
-        });
-
-
-    /* =====================================
-       MOBILE MENU
-    ===================================== */
-
-    const mobileMenu =
-        document.getElementById(
-            "mobileMenu"
-        );
-
-
-    if (mobileMenu) {
-
-        mobileMenu.addEventListener(
-            "click",
-            () => {
-
-                alert(
-                    "Open the desktop navigation or continue using the mobile interface."
-                );
-
-            }
-        );
-
-    }
-
-
-    /* =====================================
-       DEMO FORM SUBMISSION
-    ===================================== */
-
-    document
-        .querySelectorAll(
-            ".modal .button.full"
-        )
-        .forEach(button => {
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    const modal =
-                        button.closest(
-                            ".modal-overlay"
-                        );
-
-
-                    if (modal) {
-
-                        modal.classList.remove(
-                            "show"
-                        );
-
-                    }
-
-
-                    setTimeout(() => {
-
-                        alert(
-                            "Demo action completed! " +
-                            "Next step is connecting this form to your Express API."
-                        );
-
-                    }, 150);
-
-                }
-            );
-
-        });
-
-});
+}

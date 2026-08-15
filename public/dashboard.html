@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusConnect Dashboard</title>
+
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body class="dashboard-page">
+
+    <!-- NAVBAR -->
+
+    <nav class="dashboard-nav">
+
+        <div class="dashboard-logo">
+            <div class="logo-icon">CC</div>
+
+            <span>
+                Campus<span>Connect</span>
+            </span>
+        </div>
+
+
+        <div class="nav-right">
+
+            <div class="user-mini">
+
+                <div class="user-avatar" id="userAvatar">
+                    U
+                </div>
+
+                <div>
+                    <strong id="navUserName">
+                        Student
+                    </strong>
+
+                    <small id="navStudentId">
+                        Student
+                    </small>
+                </div>
+
+            </div>
+
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+
+        <!-- WELCOME -->
+
+        <section class="welcome-section">
+
+            <div>
+
+                <p class="welcome-label">
+                    YOUR CAMPUS. YOUR COMMUNITY.
+                </p>
+
+                <h1>
+                    Welcome back,
+                    <span id="welcomeName">
+                        Student
+                    </span> 👋
+                </h1>
+
+                <p>
+                    What would you like to do today?
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- TWO MAIN FEATURES -->
+
+        <section class="feature-grid">
+
+
+            <!-- STUDY BUDDY -->
+
+            <div
+                class="feature-card study-card"
+                onclick="openStudyBuddy()"
+            >
+
+                <div class="feature-top">
+
+                    <div class="feature-icon">
+                        📚
+                    </div>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </div>
+
+
+                <h2>
+                    Study Buddy
+                </h2>
+
+                <p>
+                    Find classmates, ask questions,
+                    share notes and learn together.
+                </p>
+
+
+                <div class="feature-tags">
+
+                    <span>
+                        Doubts
+                    </span>
+
+                    <span>
+                        Notes
+                    </span>
+
+                    <span>
+                        Peer Learning
+                    </span>
+
+                </div>
+
+
+                <button class="feature-button">
+                    Explore Study Buddy →
+                </button>
+
+            </div>
+
+
+            <!-- CAMPUS CART -->
+
+            <div
+                class="feature-card cart-card"
+                onclick="openCampusCart()"
+            >
+
+                <div class="feature-top">
+
+                    <div class="feature-icon">
+                        🛒
+                    </div>
+
+                    <span class="arrow">
+                        →
+                    </span>
+
+                </div>
+
+
+                <h2>
+                    Campus Cart
+                </h2>
+
+                <p>
+                    Buy and sell textbooks, stationery,
+                    lab equipment and other student resources.
+                </p>
+
+
+                <div class="feature-tags">
+
+                    <span>
+                        Buy
+                    </span>
+
+                    <span>
+                        Sell
+                    </span>
+
+                    <span>
+                        Student Resources
+                    </span>
+
+                </div>
+
+
+                <button class="feature-button">
+                    Explore Campus Cart →
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- QUICK INFO -->
+
+        <section class="quick-section">
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    🎓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Student Community
+                    </strong>
+
+                    <p>
+                        Connect with students from your campus.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    🔒
+                </div>
+
+                <div>
+
+                    <strong>
+                        Campus Verified
+                    </strong>
+
+                    <p>
+                        Built specifically for students.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-card">
+
+                <div class="quick-icon">
+                    🤝
+                </div>
+
+                <div>
+
+                    <strong>
+                        Peer to Peer
+                    </strong>
+
+                    <p>
+                        Learn, share and exchange resources.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <script>
+
+        // =====================================
+        // GET LOGIN DATA
+        // =====================================
+
+        const token =
+            localStorage.getItem(
+                "campusconnect_token"
+            );
+
+
+        const savedUser =
+            localStorage.getItem(
+                "campusconnect_user"
+            );
+
+
+        // =====================================
+        // PROTECT DASHBOARD
+        // =====================================
+
+        if (!token || !savedUser) {
+
+            window.location.replace("/");
+
+        }
+
+
+        let user;
+
+        try {
+
+            user = JSON.parse(savedUser);
+
+        } catch (error) {
+
+            localStorage.removeItem(
+                "campusconnect_token"
+            );
+
+            localStorage.removeItem(
+                "campusconnect_user"
+            );
+
+            window.location.replace("/");
+
+        }
+
+
+        // =====================================
+        // DISPLAY USER
+        // =====================================
+
+        if (user) {
+
+            const firstName =
+                user.fullName
+                    ? user.fullName.split(" ")[0]
+                    : "Student";
+
+
+            document.getElementById(
+                "welcomeName"
+            ).textContent = firstName;
+
+
+            document.getElementById(
+                "navUserName"
+            ).textContent =
+                user.fullName || "Student";
+
+
+            document.getElementById(
+                "navStudentId"
+            ).textContent =
+                user.studentId || "Student";
+
+
+            document.getElementById(
+                "userAvatar"
+            ).textContent =
+                firstName
+                    .charAt(0)
+                    .toUpperCase();
+
+        }
+
+
+        // =====================================
+        // STUDY BUDDY
+        // =====================================
+
+        function openStudyBuddy() {
+
+            window.location.href = "/study-buddy.html";
+
+        }
+
+
+        // =====================================
+        // CAMPUS CART
+        // =====================================
+
+        function openCampusCart() {
+
+            window.location.href = "/campus-cart.html";
+
+        }
+
+
+        // =====================================
+        // LOGOUT
+        // =====================================
+
+        function logout() {
+
+            localStorage.removeItem(
+                "campusconnect_token"
+            );
+
+            localStorage.removeItem(
+                "campusconnect_user"
+            );
+
+            window.location.replace("/");
+
+        }
+
+    </script>
+
+</body>
+
+</html>

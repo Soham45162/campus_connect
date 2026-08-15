@@ -23,23 +23,30 @@ const userSchema = new mongoose.Schema(
 
         studentId: {
             type: String,
-            required: true,
-            unique: true
+            trim: true,
+            default: ""
         },
 
         branch: {
             type: String,
-            default: "CSE"
+            trim: true,
+            default: ""
         },
 
         year: {
-            type: Number,
-            default: 2
+            type: String,
+            trim: true,
+            default: ""
         },
 
         isVerified: {
             type: Boolean,
-            default: false
+            default: true
+        },
+
+        isActive: {
+            type: Boolean,
+            default: true
         }
     },
     {
@@ -47,5 +54,4 @@ const userSchema = new mongoose.Schema(
     }
 );
 
-module.exports =
-    mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);
