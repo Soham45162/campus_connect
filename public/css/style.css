@@ -4,7 +4,7 @@
    Purple / Elegant / Student Community UI
 ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
 
 
 /* =========================================================
@@ -4903,5 +4903,161 @@ body::after,
     .products-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* =========================================================
+   TYPOGRAPHY REFRESH
+   Outfit for confident headings, Manrope for readable UI
+========================================================= */
+
+body,
+button,
+input,
+select,
+textarea {
+    font-family:
+        "Manrope",
+        Inter,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+.auth-brand h1,
+.auth-section h2,
+.welcome-section h1,
+.feature-card h2,
+.hero h2,
+.page-hero h2,
+.profile-cover h2,
+.module-card h3,
+.section-heading h3,
+.modal h2,
+.brand-name,
+.dashboard-logo,
+.product-info h3,
+.large-question h3,
+.question-content h4,
+.profile-stat-row strong,
+.stat strong,
+.product-price {
+    font-family:
+        "Outfit",
+        "Manrope",
+        Inter,
+        sans-serif !important;
+    letter-spacing: 0 !important;
+}
+
+.auth-brand h1,
+.hero h2,
+.page-hero h2 {
+    font-weight: 800 !important;
+}
+
+.auth-section h2,
+.topbar h1,
+.section-heading h3,
+.module-card h3,
+.modal h2,
+.profile-cover h2 {
+    font-weight: 700 !important;
+}
+
+p,
+.subtitle,
+.feature p,
+.hero p,
+.page-hero p,
+.module-card p,
+.large-question > p,
+.question-content p,
+.product-info,
+.profile-info-card,
+.chat-message,
+.conversation p {
+    font-weight: 500;
+    line-height: 1.72;
+}
+
+label,
+.nav-label,
+.section-kicker,
+.module-label,
+.eyebrow,
+.product-category,
+.condition,
+.verified-badge,
+.subject-pill,
+.cart-info,
+.activity-date,
+.chat-date,
+.divider,
+.brand-subtitle,
+.stat small,
+.sidebar-user-info small,
+.campus-card small,
+.seller small,
+.floating-card small {
+    font-family:
+        "JetBrains Mono",
+        "Manrope",
+        monospace !important;
+    letter-spacing: .04em !important;
+}
+
+.nav-item,
+.button,
+.primary-btn,
+.secondary-btn,
+.feature-button,
+.logout-btn,
+.category,
+.tab,
+.text-button,
+.contact-button,
+.forgot {
+    font-family:
+        "Manrope",
+        Inter,
+        sans-serif !important;
+    font-weight: 800 !important;
+    letter-spacing: 0 !important;
+}
+
+input,
+select,
+textarea {
+    font-weight: 600;
+}
+
+input::placeholder,
+textarea::placeholder {
+    font-weight: 500;
+}
+
+.brand-name,
+.dashboard-logo,
+.product-price,
+.stat strong,
+.profile-stat-row strong {
+    font-weight: 800 !important;
+}
+
+.hero h2 em,
+.page-hero h2 em {
+    font-family:
+        "Outfit",
+        "Manrope",
+        sans-serif !important;
+    font-style: normal;
+    font-weight: 600;
+    color: rgba(255, 255, 255, .82);
 }
 
