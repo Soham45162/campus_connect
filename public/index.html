@@ -14,7 +14,7 @@
 
     <link
         rel="stylesheet"
-        href="/css/style.css?v=9"
+        href="/css/style.css?v=12"
     >
 
 </head>
@@ -28,19 +28,48 @@
 
         <div class="auth-brand">
 
-            <div class="brand-logo">
-                CC
+            <div class="brand-mark" style="width: 56px; height: 56px; margin-bottom: 20px;">
+                <svg width="56" height="56" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="cGradAuth" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#9b5de5"/>
+                            <stop offset="50%" stop-color="#3f37c9"/>
+                            <stop offset="100%" stop-color="#00f5d4"/>
+                        </linearGradient>
+                        <linearGradient id="fig1Auth" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                            <stop offset="0%" stop-color="#00f5d4"/>
+                            <stop offset="100%" stop-color="#00bbf9"/>
+                        </linearGradient>
+                        <linearGradient id="fig2Auth" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                            <stop offset="0%" stop-color="#9b5de5"/>
+                            <stop offset="100%" stop-color="#7209b7"/>
+                        </linearGradient>
+                        <linearGradient id="fig3Auth" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
+                            <stop offset="0%" stop-color="#f15bb5"/>
+                            <stop offset="100%" stop-color="#d90429"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M72 18 C58 -2 28 -2 14 14 C-4 32 -4 68 14 86 C28 102 58 102 72 82 M62 66 C52 78 34 78 24 66 C14 54 14 36 24 24 C34 12 52 12 62 24" stroke="url(#cGradAuth)" stroke-width="12" stroke-linecap="round" fill="none"/>
+                    <path d="M50 22 L72 32 L50 42 L28 32 Z" fill="#1e1b4b" stroke="#3f37c9" stroke-width="2"/>
+                    <path d="M38 37.5 V44 C38 48 62 48 62 44 V37.5" fill="#1e1b4b" stroke="#3f37c9" stroke-width="2"/>
+                    <path d="M63 32.5 L73 40 V50" stroke="#f15bb5" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                    <circle cx="73" cy="51" r="2.5" fill="#f15bb5"/>
+                    <circle cx="34" cy="62" r="5" fill="url(#fig1Auth)"/>
+                    <path d="M26 77 C26 71 42 71 42 77" fill="url(#fig1Auth)"/>
+                    <circle cx="66" cy="62" r="5" fill="url(#fig3Auth)"/>
+                    <path d="M58 77 C58 71 74 71 74 77" fill="url(#fig3Auth)"/>
+                    <circle cx="50" cy="67" r="6" fill="url(#fig2Auth)" stroke="#ffffff" stroke-width="1.5"/>
+                    <path d="M40 84 C40 76 60 76 60 84" fill="url(#fig2Auth)" stroke="#ffffff" stroke-width="1.5"/>
+                </svg>
             </div>
 
-            <h1>
-                Campus<span>Connect</span>
+            <h1 class="brand-name" style="font-size: 32px !important; margin-bottom: 8px;">
+                Campus<span class="brand-connect">Connect</span>
             </h1>
 
-            <p>
-                Your campus.
-                Your community.
-                Your connection.
-            </p>
+            <div class="brand-subtitle" style="font-size: 10px !important; margin-bottom: 24px;">
+                — STUDENT ECOSYSTEM —
+            </div>
 
 
             <div class="features">

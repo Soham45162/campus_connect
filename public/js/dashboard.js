@@ -142,10 +142,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (pageTitle) {
             if (pageName === "home" && currentUser) {
                 const firstName = currentUser.fullName ? currentUser.fullName.split(" ")[0] : "Student";
-                pageTitle.textContent = `Good morning, ${firstName}.`;
+                pageTitle.textContent = `Good morning, ${firstName}. 👋`;
             } else {
                 pageTitle.textContent = pageTitles[pageName] || "CampusConnect";
             }
+        }
+
+        const pageSubtitle = document.getElementById("pageSubtitle");
+        const pageSubtitles = {
+            home: "Let's learn, share and grow together.",
+            study: "Learn with people who get it.",
+            cart: "Give useful things a second life. Buy and resell academic essentials directly with students on your campus.",
+            messages: "Conversations that move things forward.",
+            saved: "Things worth coming back to.",
+            profile: "Manage your account and see your activity."
+        };
+        if (pageSubtitle) {
+            pageSubtitle.textContent = pageSubtitles[pageName] || "";
         }
 
         // Clean up chat interval if leaving messages page
@@ -325,7 +338,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Reset page titles with greeting
         if (pageTitle && document.querySelector(".nav-item[data-page='home']").classList.contains("active")) {
             const firstName = currentUser.fullName.split(" ")[0];
-            pageTitle.textContent = `Good morning, ${firstName}.`;
+            pageTitle.textContent = `Good morning, ${firstName}. 👋`;
+            const pageSubtitle = document.getElementById("pageSubtitle");
+            if (pageSubtitle) {
+                pageSubtitle.textContent = "Let's learn, share and grow together.";
+            }
         }
     }
 
@@ -1094,6 +1111,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Verify bookmarked items exist in global state
         const bookmarkedProducts = allProducts.filter(p => savedItems.products.includes(p._id));
         const bookmarkedResources = allResources.filter(r => savedItems.resources.includes(r._id));
+
+        const savedStatsItemsCount = document.getElementById("savedStatsItemsCount");
+        if (savedStatsItemsCount) {
+            savedStatsItemsCount.textContent = `${bookmarkedProducts.length + bookmarkedResources.length} Saved Items`;
+        }
 
         if (bookmarkedProducts.length === 0 && bookmarkedResources.length === 0) {
             savedGrid.innerHTML = `<div style="text-align: center; padding: 40px; color: var(--muted); grid-column: span 2;">You haven't saved anything yet. Browse cart and notes to bookmark things!</div>`;
